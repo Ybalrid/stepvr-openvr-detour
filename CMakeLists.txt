@@ -1,10 +1,9 @@
-cmake_minimum_required(VERSION 4.0)
+cmake_minimum_required(VERSION 3.31)
 project(stepvr_openvr_detour LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-set(RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 if(NOT WIN32)
   message(FATAL_ERROR "This project targets Windows only.")
