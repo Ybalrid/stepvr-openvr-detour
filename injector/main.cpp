@@ -3,7 +3,9 @@
 #include <iostream>
 #include <algorithm>
 
-#define TARGET_PROCESS_NAME "Monster Titans Playground"
+#define DEFAULT_TARGET_PROCESS_NAME "Monster Titans Playground"
+
+char target_process[MAX_PATH];
 
 DWORD find_process_id()
 {
@@ -31,7 +33,7 @@ DWORD find_process_id()
 
 			std::cout << "Found name " << name << "\n";
 
-			if (nullptr != strstr(name, TARGET_PROCESS_NAME))
+			if (nullptr != strstr(name, target_process))
 			{
 				return pid;
 			}
@@ -64,6 +66,7 @@ void inject_into(DWORD pid, LPCSTR dll)
 			{
 				CreateRemoteThread(hProcess, nullptr, 0, (LPTHREAD_START_ROUTINE)loadlibrarya_ptr, buffer, 0, nullptr);
 			}
+
 		}
 
 		CloseHandle(hProcess);
@@ -72,6 +75,17 @@ void inject_into(DWORD pid, LPCSTR dll)
 
 int main(int argc, char* argv[])
 {
+	if (argc > 1)
+	{
+		strcpy(target_process, argv[1]);
+	}
+	else
+	{
+		//fallback to the monster game for testing
+		strcpy(target_process, DEFAULT_TARGET_PROCESS_NAME);
+	}
+
+
 	char current_directory[MAX_PATH] = {};
 	GetCurrentDirectoryA(MAX_PATH, current_directory);
 
